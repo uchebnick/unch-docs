@@ -14,86 +14,102 @@ If you install with `go install`, build from source, or install on a target with
 
 On Windows source builds, that means an MSYS2 or MinGW-style toolchain, or an equivalent setup.
 
-## Homebrew on macOS
+## Choose an install path
 
-```bash
-brew install uchebnick/tap/unch
-```
+<Tabs>
+  <Tab title="Homebrew (macOS)">
+    ```bash
+    brew install uchebnick/tap/unch
+    ```
 
-Upgrade later with:
+    Upgrade later with:
 
-```bash
-brew upgrade unch
-```
+    ```bash
+    brew upgrade unch
+    ```
+  </Tab>
 
-## Shell installer on macOS and Linux
+  <Tab title="Shell installer (macOS/Linux)">
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/uchebnick/unch/main/install.sh | sh
+    ```
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/uchebnick/unch/main/install.sh | sh
-```
+    Or with `wget`:
 
-Or with `wget`:
+    ```bash
+    wget -qO- https://raw.githubusercontent.com/uchebnick/unch/main/install.sh | sh
+    ```
 
-```bash
-wget -qO- https://raw.githubusercontent.com/uchebnick/unch/main/install.sh | sh
-```
+    Default install location:
 
-Default install location:
+    ```text
+    $HOME/.local/bin
+    ```
 
-```text
-$HOME/.local/bin
-```
+    Pin a version or choose a destination:
 
-Pin a version or choose a destination:
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/uchebnick/unch/main/install.sh | sh -s -- -b /usr/local/bin
+    curl -fsSL https://raw.githubusercontent.com/uchebnick/unch/main/install.sh | sh -s -- -v v0.3.6
+    ```
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/uchebnick/unch/main/install.sh | sh -s -- -b /usr/local/bin
-curl -fsSL https://raw.githubusercontent.com/uchebnick/unch/main/install.sh | sh -s -- -v v0.3.6
-```
+    `install.sh` is smoke-tested in CI on Ubuntu, Debian, Arch, and NixOS-like Linux environments.
+  </Tab>
 
-`install.sh` is smoke-tested in CI on Ubuntu, Debian, Arch, and NixOS-like Linux environments.
+  <Tab title="PowerShell (Windows)">
+    ```powershell
+    iwr https://raw.githubusercontent.com/uchebnick/unch/main/install/install.ps1 -useb | iex
+    ```
 
-## PowerShell installer on Windows
+    Default install location:
 
-```powershell
-iwr https://raw.githubusercontent.com/uchebnick/unch/main/install/install.ps1 -useb | iex
-```
+    ```text
+    $HOME\AppData\Local\Programs\unch\bin
+    ```
 
-Default install location:
+    After downloading the script locally, you can override the target or pin a version:
 
-```text
-$HOME\AppData\Local\Programs\unch\bin
-```
+    ```powershell
+    .\install\install.ps1 -BinDir "C:\Tools\unch\bin" -Version v0.3.6
+    ```
 
-After downloading the script locally, you can override the target or pin a version:
+    The PowerShell installer is smoke-tested in CI on Windows `x86_64` and `arm64`.
+  </Tab>
 
-```powershell
-.\install\install.ps1 -BinDir "C:\Tools\unch\bin" -Version v0.3.6
-```
+  <Tab title="go install">
+    ```bash
+    go install github.com/uchebnick/unch/cmd/unch@latest
+    ```
 
-The PowerShell installer is smoke-tested in CI on Windows `x86_64` and `arm64`.
+    Older references to `github.com/uchebnick/unch-searcher` should be treated as legacy.
+  </Tab>
 
-## go install
+  <Tab title="Build from source">
+    ```bash
+    git clone https://github.com/uchebnick/unch.git
+    cd unch
+    go build -o unch ./cmd/unch
+    ```
 
-```bash
-go install github.com/uchebnick/unch/cmd/unch@latest
-```
+    On Windows:
 
-Older references to `github.com/uchebnick/unch-searcher` should be treated as legacy.
+    ```powershell
+    go build -o unch.exe ./cmd/unch
+    ```
+  </Tab>
+</Tabs>
 
-## Build from source
-
-```bash
-git clone https://github.com/uchebnick/unch.git
-cd unch
-go build -o unch ./cmd/unch
-```
-
-On Windows:
-
-```powershell
-go build -o unch.exe ./cmd/unch
-```
+<CardGroup cols={3}>
+  <Card title="Fastest path" icon="bolt">
+    Use Homebrew on macOS or the shell/PowerShell installer on release-supported targets.
+  </Card>
+  <Card title="Most flexible" icon="sliders">
+    Use `go install` or build from source when you want a local checkout or custom toolchain flow.
+  </Card>
+  <Card title="No Go required" icon="box-archive">
+    Published release archives cover macOS, Linux, and Windows on both `arm64` and `x86_64`.
+  </Card>
+</CardGroup>
 
 ## Published release archives
 
@@ -108,3 +124,7 @@ go build -o unch.exe ./cmd/unch
 ```bash
 unch --help
 ```
+
+<Tip>
+  If Mintlify is connected to the separate docs repository, keep product docs changes in `unch-docs` so deploys stay isolated from code changes.
+</Tip>
